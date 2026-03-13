@@ -1,0 +1,4 @@
+{
+  "webhook_mode": "Production mode: webhook actived",
+  "polling_mode": "Dev mode: polling actived"
+}

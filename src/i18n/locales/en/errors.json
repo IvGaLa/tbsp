@@ -1,0 +1,6 @@
+{
+  "error_executing_command": "Error executing command {{commandName}}",
+  "command_not_found": "Command {{commandName}} not found",
+  "what": "What do you mean by {{text}}",
+  "bot_token_required": "BOT_TOKEN is required"
+}

@@ -1,0 +1,38 @@
+{
+  "name": "node-dev",
+
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+
+  "runArgs": ["--name=${localWorkspaceFolderBasename}-dev"],
+
+  "mounts": [
+    "source=${localWorkspaceFolderBasename}-node_modules,target=/workspace/node_modules,type=volume",
+    "source=pnpm-store,target=/pnpm,type=volume"
+  ],
+
+  "containerEnv": {
+    "PNPM_HOME": "/pnpm",
+    "PNPM_STORE_DIR": "/pnpm/store"
+  },
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "nodeGypDependencies": true
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "christian-kohler.path-intellisense",
+        "mikestead.dotenv"
+      ]
+    }
+  },
+
+  "postCreateCommand": "corepack enable && pnpm config set store-dir /pnpm/store && pnpm install",
+
+  "remoteUser": "node"
+}

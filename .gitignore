@@ -1,0 +1,14 @@
+node_modules
+.env
+.env.dev
+.env.prod
+*.code-workspace
+dist
+coverage
+.DS_Store
+tmp*
+.pnpm-store
+
+src/db/*.db
+git_cheat_sheet.md
+todo.md

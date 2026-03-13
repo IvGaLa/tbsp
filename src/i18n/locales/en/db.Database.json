@@ -1,0 +1,4 @@
+{
+  "query_error": "Database query error: {{error}}",
+  "execute_error": "Database execute error: {{error}}"
+}
