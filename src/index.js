@@ -24,13 +24,16 @@ import { bot, startBotPolling } from './bot/bot.js';
 
 import { startServer } from './server/express.js';
 import { registerHandlers } from './bot/registerHandlers.js';
-import { i18nMiddleware } from './bot/middlewares/i18n.middleware.js';
-import { cacheMiddleware } from './bot/middlewares/cache.middleware.js';
+
+const middlewares = ['i18n', 'cache'];
 
 const start = async () => {
   // Load middlewares
-  bot.use(i18nMiddleware); // i18n middleware
-  bot.use(cacheMiddleware); // Cache middleware
+  for (const name of middlewares) {
+    const middlewareFile = `./bot/middlewares/${name}.middleware.js`;
+    const { default: middlewareFunc } = await import(middlewareFile);
+    bot.use(middlewareFunc);
+  }
 
   // Load handlers
   await registerHandlers(bot);

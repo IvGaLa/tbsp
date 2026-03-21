@@ -1,7 +1,7 @@
 import { userCache } from '../../cache/userCache.js';
 import { getUserByTelegramId } from '../../db/repositories/user.repository.js';
 
-export async function cacheMiddleware(ctx, next) {
+const cacheMiddleware = async (ctx, next) => {
   const telegramId = ctx.from?.id;
 
   if (!telegramId) return next();
@@ -27,4 +27,6 @@ export async function cacheMiddleware(ctx, next) {
   ctx.cache = user;
 
   return next();
-}
+};
+
+export default cacheMiddleware;
