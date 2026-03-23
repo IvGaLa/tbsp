@@ -16,14 +16,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import { config } from './config/config.js';
+import { config } from './tbsp/config/config.js';
 
-import i18next from './i18n/index.js';
+import i18next from './tbsp/i18n/index.js';
 
 import { tbsp, startBotPolling } from './tbsp/tbsp.js';
 
-import { startServer } from './server/express.js';
-import { registerHandlers } from './tbsp/registerHandlers.js';
+import { startServer } from './tbsp/server/express.js';
+import { registerHandlers } from './tbsp/lib/registerHandlers.js';
 
 const middlewares = ['i18n', 'cache'];
 

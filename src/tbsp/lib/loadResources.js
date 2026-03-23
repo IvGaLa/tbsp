@@ -7,7 +7,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export async function loadResources(dirName, fileName) {
-  const resourceDir = path.join(__dirname, dirName);
+  const resourceDir = path.join(__dirname, '..', dirName);
 
   // Sorting handlers files
   const files = fs
@@ -46,7 +46,7 @@ export async function loadResources(dirName, fileName) {
     const handlerName = resource.name.toLowerCase().trim();
 
     if (resources[handlerName]) {
-      i18next.errorT('handlers.already_exists', {
+      i18next.warnT('handlers.already_exists', {
         handler_name: handlerName,
         handler_filename: fileUrl,
         handler_filename_exists: resources[handlerName].__file,

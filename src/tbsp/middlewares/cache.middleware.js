@@ -1,5 +1,5 @@
-import { userCache } from '../../cache/userCache.js';
-import { getUserByTelegramId } from '../../db/repositories/user.repository.js';
+import { userCache } from '../lib/userCache.js';
+import { getUserByTelegramId } from '../db/repositories/user.repository.js';
 
 const cacheMiddleware = async (ctx, next) => {
   const telegramId = ctx.from?.id;

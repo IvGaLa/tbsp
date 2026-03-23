@@ -1,4 +1,4 @@
-import { config } from '../config/config.js';
+import { config } from './config/config.js';
 import { Bot } from 'grammy';
 
 export const tbsp = new Bot(config.BOT_TOKEN);

@@ -1,6 +1,6 @@
 import express from 'express';
 import { webhookCallback } from 'grammy';
-import { tbsp } from '../tbsp/tbsp.js';
+import { tbsp } from '../tbsp.js';
 import { config } from '../config/config.js';
 import i18next from '../i18n/index.js';
 
