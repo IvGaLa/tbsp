@@ -6,7 +6,7 @@
   "runArgs": ["--name=${localWorkspaceFolderBasename}-dev"],
 
   "mounts": [
-    "source=${localWorkspaceFolderBasename}-node_modules,target=/workspace/node_modules,type=volume",
+    "source=${localWorkspaceFolderBasename}-node_modules,target=/workspaces/${localWorkspaceFolderBasename}/node_modules,type=volume",
     "source=pnpm-store,target=/pnpm,type=volume"
   ],
 
@@ -32,7 +32,9 @@
     }
   },
 
-  "postCreateCommand": "corepack enable && pnpm config set store-dir /pnpm/store && pnpm install",
+  "postCreateCommand": "sudo chown -R node:node /workspaces/${localWorkspaceFolderBasename}/node_modules && sudo chown -R node:node /pnpm && corepack enable && corepack prepare pnpm@latest --activate && pnpm config set store-dir /pnpm && pnpm install",
+
+  "postStartCommand": "sudo chown -R node:node /workspaces/${localWorkspaceFolderBasename}/node_modules && sudo chown -R node:node /pnpm",
 
   "remoteUser": "node"
 }
