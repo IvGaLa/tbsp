@@ -2,5 +2,14 @@
   "error_executing_command": "Error executing command {{commandName}}",
   "command_not_found": "Command {{commandName}} not found",
   "what": "What do you mean by {{text}}",
-  "bot_token_required": "BOT_TOKEN is required"
+  "bot_token_required": "BOT_TOKEN is required",
+  "handlers": {
+    "validations": {
+      "resource": "The 'handler' of the file {{handler_filename}} does not have the expected format (an object with the properties 'name:string' and 'execute:function'). It must be exported as 'default'.",
+      "name": "The 'name' property of the file handler {{fileUrl}} does not exist or is not a string.",
+      "execute": "The 'execute' property of the file handler {{fileUrl}} does not exist or is not a function."
+    },
+
+    "already_exists": "The handler '{{handler_name}}' already exists in '{{handler_filename_exists}}'. Modify handler name in file '{{handler_filename}}'"
+  }
 }

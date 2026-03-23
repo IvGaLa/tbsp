@@ -2,5 +2,15 @@
   "error_executing_command": "Error al ejecutar el comando {{commandName}}.",
   "command_not_found": "No se ha encontrado el comando {{commandName}}.",
   "what": "¿Qué quieres decir con {{text}}?",
-  "bot_token_required": "Se requiere BOT_TOKEN."
+  "bot_token_required": "Se requiere BOT_TOKEN.",
+
+  "handlers": {
+    "validations": {
+      "resource": "El 'handler' del fichero {{handler_filename}} no tiene el formato esperado (un objeto con las propiedades 'name:string' y 'execute:function'). Debe exportarse como 'default'",
+      "name": "La propiedad 'name' en el fichero {{fileUrl}} no existe o no es un string.",
+      "execute": "La propiedad 'execute' en el fichero {{fileUrl}} no existe o no es una función."
+    },
+
+    "already_exists": "El manejador '{{handler_name}}' ya existe en el fichero '{{handler_filename_exists}}'. Modifica el nombre en el fichero '{{handler_filename}}'"
+  }
 }
