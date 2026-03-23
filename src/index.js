@@ -20,33 +20,33 @@ import { config } from './config/config.js';
 
 import i18next from './i18n/index.js';
 
-import { bot, startBotPolling } from './bot/bot.js';
+import { tbsp, startBotPolling } from './tbsp/tbsp.js';
 
 import { startServer } from './server/express.js';
-import { registerHandlers } from './bot/registerHandlers.js';
+import { registerHandlers } from './tbsp/registerHandlers.js';
 
 const middlewares = ['i18n', 'cache'];
 
 const start = async () => {
   // Load middlewares
   for (const name of middlewares) {
-    const middlewareFile = `./bot/middlewares/${name}.middleware.js`;
+    const middlewareFile = `./tbsp/middlewares/${name}.middleware.js`;
     const { default: middlewareFunc } = await import(middlewareFile);
-    bot.use(middlewareFunc);
+    tbsp.use(middlewareFunc);
   }
 
   // Load handlers
-  await registerHandlers(bot);
+  await registerHandlers(tbsp);
 
   if (config.NODE_ENV === 'production') {
-    console.log(i18next.t('webhook_mode'));
+    i18next.logT('webhook_mode');
     await startServer();
   } else {
-    console.log(i18next.t('polling_mode'));
+    i18next.logT('polling_mode');
     startBotPolling();
 
-    process.once('SIGINT', () => bot.stop());
-    process.once('SIGTERM', () => bot.stop());
+    process.once('SIGINT', () => tbsp.stop());
+    process.once('SIGTERM', () => tbsp.stop());
   }
 };
 

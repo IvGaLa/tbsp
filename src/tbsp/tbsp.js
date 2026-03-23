@@ -1,9 +1,9 @@
 import { config } from '../config/config.js';
 import { Bot } from 'grammy';
 
-export const bot = new Bot(config.BOT_TOKEN);
+export const tbsp = new Bot(config.BOT_TOKEN);
 
 export const startBotPolling = async () => {
-  await bot.api.deleteWebhook();
-  await bot.start(); // polling
+  await tbsp.api.deleteWebhook();
+  await tbsp.start(); // polling
 };
