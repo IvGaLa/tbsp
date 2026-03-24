@@ -1,31 +1,14 @@
-/**
- * My memory is failing me
- * Copyright (C) 2026 IvGaLa (https://github.com/IvGaLa/)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
- * See the GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program. If not, see <https://www.gnu.org/licenses/>.
- */
-
 import { config } from './tbsp/config/config.js';
 
 import i18next from './tbsp/i18n/index.js';
 
-import { tbsp, startBotPolling } from './tbsp/tbsp.js';
+import { Tbsp } from './tbsp/tbsp.js';
 
-import { startServer } from './tbsp/server/express.js';
 import { registerHandlers } from './tbsp/lib/registerHandlers.js';
 
 const middlewares = ['i18n', 'cache'];
+
+const tbsp = new Tbsp();
 
 const start = async () => {
   // Load middlewares
@@ -40,10 +23,10 @@ const start = async () => {
 
   if (config.NODE_ENV === 'production') {
     i18next.logT('webhook_mode');
-    await startServer();
+    await tbsp.startServer();
   } else {
     i18next.logT('polling_mode');
-    startBotPolling();
+    tbsp.startBotPolling();
 
     process.once('SIGINT', () => tbsp.stop());
     process.once('SIGTERM', () => tbsp.stop());
