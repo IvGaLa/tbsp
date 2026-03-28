@@ -1,25 +1,16 @@
-import { config } from './tbsp/config/config.js';
-
 import i18next from './tbsp/i18n/index.js';
 
+import { config } from './tbsp/config/config.js';
 import { Tbsp } from './tbsp/tbsp.js';
 
-import { registerHandlers } from './tbsp/lib/registerHandlers.js';
-
-const middlewares = ['i18n', 'cache'];
-
-const tbsp = new Tbsp();
-
 const start = async () => {
-  // Load middlewares
-  for (const name of middlewares) {
-    const middlewareFile = `./tbsp/middlewares/${name}.middleware.js`;
-    const { default: middlewareFunc } = await import(middlewareFile);
-    tbsp.use(middlewareFunc);
-  }
+  const _config = {
+    BOT_TOKEN: config?.BOT_TOKEN,
+    loadDefaultHandlers: true,
+    loadDefaultMiddleware: true,
+  };
 
-  // Load handlers
-  await registerHandlers(tbsp);
+  const tbsp = new Tbsp(_config);
 
   if (config.NODE_ENV === 'production') {
     i18next.logT('webhook_mode');
