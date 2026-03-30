@@ -9,6 +9,6 @@ coverage
 tmp*
 .pnpm-store
 
-src/db/*.db
+*.db
 git_cheat_sheet.md
 todo.md
