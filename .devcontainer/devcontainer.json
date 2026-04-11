@@ -5,6 +5,8 @@
 
   "runArgs": ["--name=${localWorkspaceFolderBasename}-dev"],
 
+  "remoteUser": "node",
+
   "mounts": [
     "source=${localWorkspaceFolderBasename}-node_modules,target=/workspaces/${localWorkspaceFolderBasename}/node_modules,type=volume",
     "source=pnpm-store,target=/pnpm,type=volume"
@@ -21,6 +23,10 @@
     }
   },
 
+  "onCreateCommand": "corepack enable && corepack prepare pnpm@latest --activate",
+
+  "postCreateCommand": "pnpm config set store-dir /pnpm/store && pnpm install",
+
   "customizations": {
     "vscode": {
       "extensions": [
@@ -30,11 +36,5 @@
         "mikestead.dotenv"
       ]
     }
-  },
-
-  "postCreateCommand": "sudo chown -R node:node /workspaces/${localWorkspaceFolderBasename}/node_modules && sudo chown -R node:node /pnpm && corepack enable && corepack prepare pnpm@latest --activate && pnpm config set store-dir /pnpm && pnpm install",
-
-  "postStartCommand": "sudo chown -R node:node /workspaces/${localWorkspaceFolderBasename}/node_modules && sudo chown -R node:node /pnpm",
-
-  "remoteUser": "node"
+  }
 }
