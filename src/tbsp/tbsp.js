@@ -32,8 +32,8 @@ const _config = {
   BOT_TOKEN: 'token', // string
   loadDefaultHandlers: bool or [], // Load default tbsp handlers. If true load all handlers, false load none, array only load handlers in array
   loadDefaultMiddleware: bool or [], // Load default tbsp middlewares. If true load all middlewares, false load none, array only load middlewares in array
-  loadHandlers: [], // Array with name of custom handlers to load
-  loadMiddlewares: [], // Array with name of custom middlewares to load
+  customHandlers: [], // Array with name of custom handlers to load
+  customMiddlewares: [], // Array with name of custom middlewares to load
 };
  */
 
@@ -53,8 +53,20 @@ export class Tbsp extends Bot {
     this.__filename = fileURLToPath(import.meta.url);
     this.__dirname = path.dirname(this.__filename);
 
-    this.loadDefaultMiddlewares(_config?.loadDefaultMiddlewares);
-    this.loadDefaultHandlers(_config?.loadDefaultHandlers);
+    // If we want load default middlewares or handlers, we load them before any custom one, so custom one can override default ones if they want
+    if (_config?.loadDefaultMiddlewares) this.loadDefaultMiddlewares();
+    if (_config?.loadDefaultHandlers) this.loadDefaultHandlers();
+
+    if (this.validArrayOfStrings(_config?.customMiddlewares))
+      this.loadMiddlewares(_config.customMiddlewares, config.dirs.middlewares.custom);
+
+    if (this.validArrayOfStrings(_config?.customHandlers))
+      this.loadHandlers(_config.customHandlers, config.dirs.handlers.custom);
+  }
+
+  // Check if value is an array of strings
+  validArrayOfStrings(value = null) {
+    return Array.isArray(value) && value.length > 0 && value.every((v) => typeof v === 'string');
   }
 
   async getAllFilesFromDir(dir, endsWith = null) {
@@ -78,22 +90,33 @@ export class Tbsp extends Bot {
     return items;
   }
 
-  async loadMiddlewares(middlewares) {
-    const dir = this._middlewaresDir.dirName;
+  async loadMiddlewares(middlewares, _dir = null) {
+    const dir = _dir || this._middlewaresDir.dirName;
     for (const name of middlewares) {
       const file = `${dir}${name}`;
+
+      if (!fs.existsSync(file)) {
+        // TO-DO: Log warning about missing middleware file
+        continue;
+      }
+
       const { default: fn } = await import(file);
       this.use(fn);
     }
   }
 
-  async loadHandlers(handlers) {
-    const dir = this._handlersDir.dirName;
+  async loadHandlers(handlers, _dir = null) {
+    const dir = _dir || this._handlersDir.dirName;
     const resources = {};
     for (const handler of handlers) {
       const filePath = path.join(this.__dirname, dir, handler);
 
       const fileUrl = pathToFileURL(filePath).href;
+
+      if (!fs.existsSync(filePath)) {
+        // TO-DO: Log warning about missing handler file
+        continue;
+      }
 
       const module = await import(fileUrl);
 

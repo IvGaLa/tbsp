@@ -8,6 +8,8 @@ const start = async () => {
     BOT_TOKEN: config?.BOT_TOKEN,
     loadDefaultHandlers: true,
     loadDefaultMiddleware: true,
+    // Example: customHandlers: ['custom.handler.js'],
+    // Example: customMiddlewares: ['custom.middleware.js'],
   };
 
   const tbsp = new Tbsp(_config);
