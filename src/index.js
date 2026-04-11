@@ -2,6 +2,7 @@ import i18next from './tbsp/i18n/index.js';
 
 import { config } from './tbsp/config/config.js';
 import { Tbsp } from './tbsp/tbsp.js';
+import { TbspServer } from './tbsp/lib/TbspServer.js';
 
 const start = async () => {
   const _config = {
@@ -16,7 +17,10 @@ const start = async () => {
 
   if (config.NODE_ENV === 'production') {
     i18next.logT('webhook_mode');
-    await tbsp.startServer();
+
+    const server = new TbspServer(tbsp);
+
+    await server.start();
   } else {
     i18next.logT('polling_mode');
     tbsp.startBotPolling();

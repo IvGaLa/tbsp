@@ -7,9 +7,10 @@ import { i18next as i18nextConf } from '../config/i18next.js';
 class I18next {
   __filename = fileURLToPath(import.meta.url);
   __dirname = path.dirname(this.__filename);
-  i18n = i18next;
 
   constructor() {
+    this.i18n = i18next.createInstance();
+
     const { resources, namespaces } = this.loadLocales();
 
     this.i18n
@@ -28,6 +29,10 @@ class I18next {
         defaultNS: namespaces,
         interpolation: { escapeValue: false },
       });
+  }
+
+  t(key, options) {
+    return this.i18n.t(key, options);
   }
 
   loadLocales() {
@@ -82,8 +87,8 @@ class I18next {
     };
 
     const { method, color } = methods[_type] || methods.default;
-    const text = i18next.t(_msg, _options);
 
+    const text = this.t(_msg, _options);
     console[method](`${color}${text}${colors.reset}`);
   }
 

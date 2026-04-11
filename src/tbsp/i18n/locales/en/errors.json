@@ -3,6 +3,7 @@
   "command_not_found": "Command {{commandName}} not found",
   "what": "What do you mean by {{text}}",
   "bot_token_required": "BOT_TOKEN is required",
+  "bot_instance_required": "Bot instance is required",
   "handlers": {
     "validations": {
       "resource": "The 'handler' of the file {{handler_filename}} does not have the expected format (an object with the properties 'name:string' and 'execute:function'). It must be exported as 'default'.",

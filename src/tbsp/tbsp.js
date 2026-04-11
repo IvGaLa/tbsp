@@ -210,33 +210,4 @@ export class Tbsp extends Bot {
     await this.api.deleteWebhook();
     await this.start(); // polling
   }
-
-  async startServer() {
-    // TODO: Back to separate server xD
-    const app = express();
-
-    app.use(express.json());
-
-    // Healthcheck
-    app.get('/health', (req, res) => {
-      res.status(200).json({
-        status: 'ok',
-        uptime: process.uptime(),
-        timestamp: Date.now(),
-      });
-    });
-
-    const webhookPath = `/webhook/${config.WEBHOOK_SECRET}`;
-
-    // Telegram webhook endpoint
-    app.use(webhookPath, webhookCallback(this, 'express'));
-
-    // Register webhook in Telegram
-    await this.api.deleteWebhook();
-    await this.api.setWebhook(`${config.WEBHOOK_URL}${webhookPath}`);
-
-    app.listen(config.PORT, () => {
-      i18next.infoT('server_listen', { port: config.PORT });
-    });
-  }
 }
