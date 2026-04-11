@@ -87,7 +87,7 @@ export class Tbsp extends Bot {
     }
   }
 
-  async laodHandlers(handlers) {
+  async loadHandlers(handlers) {
     const dir = this._handlersDir.dirName;
     const resources = {};
     for (const handler of handlers) {
@@ -175,7 +175,7 @@ export class Tbsp extends Bot {
 
   async loadDefaultHandlers(defaults = this._handlers) {
     const handlers = await this.getResources(this._handlersDir, defaults);
-    this.laodHandlers(handlers);
+    this.loadHandlers(handlers);
   }
 
   async loadDefaultMiddlewares(defaults = this._middlewares) {
