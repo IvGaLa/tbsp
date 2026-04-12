@@ -23,9 +23,10 @@
     }
   },
 
-  "onCreateCommand": "corepack enable && corepack prepare pnpm@latest --activate",
-
-  "postCreateCommand": "pnpm config set store-dir /pnpm/store && pnpm install",
+  //  "onCreateCommand": "corepack enable && corepack prepare pnpm@latest --activate",
+  //  "postCreateCommand": "pnpm config set store-dir /pnpm/store && pnpm install",
+  "onCreateCommand": "sudo chown -R node:node /pnpm && sudo chown -R node:node /workspaces/${localWorkspaceFolderBasename}/node_modules",
+  "postCreateCommand": "corepack prepare pnpm@latest --activate && pnpm config set store-dir /pnpm/store && pnpm install",
 
   "customizations": {
     "vscode": {
