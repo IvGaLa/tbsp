@@ -1,4 +1,6 @@
-export const dirs = {
+import type { ConfigDirs } from '../types/config/configdirs.types.js';
+
+export const dirs: ConfigDirs = {
   handlers: {
     dirName: './handlers/',
     fileName: '.handler.js',

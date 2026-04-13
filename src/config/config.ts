@@ -15,5 +15,5 @@ export const config = {
 };
 
 if (!config.BOT_TOKEN) {
-  throw new Error(i18next.t('bot_token_required'));
+  throw new Error(i18next.t('bot_token_required') as string);
 }

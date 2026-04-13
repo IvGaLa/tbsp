@@ -1,8 +1,8 @@
-import i18next from './tbsp/i18n/index.js';
+import i18next from './i18n/index.js';
 
-import { config } from './tbsp/config/config.js';
-import { Tbsp } from './tbsp/tbsp.js';
-import { TbspServer } from './tbsp/lib/TbspServer.js';
+import { config } from './config/config.js';
+import { Tbsp } from './tbsp.js';
+import { TbspServer } from './lib/TbspServer.js';
 
 const start = async () => {
   const _config = {

@@ -3,11 +3,12 @@
   "version": "0.1.0-alpha",
   "description": "Telegram Bot Starter Pack: This is a basic template to develop a custom telegram bot.",
   "type": "module",
-  "main": "src/index.js",
+  "main": "tbsp.js",
   "scripts": {
+    "build": "tsc && cp -r src/i18n/locales dist/i18n/",
+    "start": "node dist/index.js",
+    "dev": "cp -r .env.dev dist/.env.dev && cp -r src/i18n/locales dist/i18n/ && concurrently \"tsc --watch\" \"dotenv -e .env.dev -- nodemon -L dist/index.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "dotenv -e .env.dev -- nodemon -L src/index.js",
-    "start": "node src/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write"
@@ -40,11 +41,15 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/node": "^25.6.0",
+    "@types/node-fetch": "^2.6.13",
+    "concurrently": "^9.2.1",
     "dotenv-cli": "^11.0.0",
     "eslint": "^10.0.1",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.3.0",
     "nodemon": "^3.1.14",
-    "prettier": "^3.8.1"
+    "prettier": "^3.8.1",
+    "typescript": "^6.0.2"
   }
 }
