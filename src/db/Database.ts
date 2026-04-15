@@ -3,14 +3,19 @@
  * so that later I can change Turso (the default) to another database manager.
  */
 
+import type { SQLParam } from '../types/db/db.types.js';
+
 import i18next from '../i18n/index.js';
+import type { Client, Transaction } from '@libsql/client';
 
 export class Database {
-  constructor(client) {
+  private client: Client;
+
+  constructor(client: Client) {
     this.client = client;
   }
 
-  async query(sql, args = []) {
+  async query(sql: string, args: SQLParam[] = []) {
     try {
       const result = await this.client.execute({
         sql,
@@ -24,7 +29,7 @@ export class Database {
     }
   }
 
-  async execute(sql, args = []) {
+  async execute(sql: string, args: SQLParam[] = []) {
     try {
       const result = await this.client.execute({
         sql,
@@ -41,7 +46,7 @@ export class Database {
     }
   }
 
-  async transaction(callback) {
+  async transaction(callback: (tx: Transaction) => Promise<any>) {
     const tx = await this.client.transaction();
 
     try {

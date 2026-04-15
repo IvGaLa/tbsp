@@ -1,8 +1,6 @@
 import type { ConfigEnv } from '../types/config/configenv.types.js';
 
-function getEnvVar(name: string): string {
-  return process.env[name] || '';
-}
+import { getEnvVar } from '../lib/utils.js';
 
 export const env: ConfigEnv = {
   BOT_TOKEN: getEnvVar('BOT_TOKEN'),

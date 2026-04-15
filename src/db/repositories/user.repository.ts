@@ -1,6 +1,6 @@
 import { db } from '../index.js';
 
-export const getUserByTelegramId = async (telegramId) => {
+export const getUserByTelegramId = async (telegramId: number) => {
   const sql = `SELECT telegram_id, timezone
     FROM users
     WHERE telegram_id = ? AND active = 1;`;

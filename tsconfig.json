@@ -14,5 +14,5 @@
 
     "ignoreDeprecations": "6.0"
   },
-  "include": ["src"]
+  "include": ["src/handlers/*.handler.ts", "src/middlewares/*.middleware.ts", "src"]
 }
