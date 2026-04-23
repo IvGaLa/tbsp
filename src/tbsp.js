@@ -19,8 +19,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
-import express from 'express';
-import { webhookCallback, Bot } from 'grammy';
+import { Bot } from 'grammy';
 
 import i18next from './i18n/index.js';
 
