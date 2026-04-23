@@ -1,7 +1,8 @@
+import { DbUser } from '../../types/db/dbuser.types.js';
 import { db } from '../index.js';
 
-export const getUserByTelegramId = async (telegramId: number) => {
-  const sql = `SELECT telegram_id, timezone
+export const getUserByTelegramId = async (telegramId: number): Promise<DbUser | null> => {
+  const sql = `SELECT *
     FROM users
     WHERE telegram_id = ? AND active = 1;`;
 

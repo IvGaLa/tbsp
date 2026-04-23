@@ -1,4 +1,4 @@
-import type { ReminderStatus } from '../unions.types.js';
+import type { ReminderStatus } from './unions.types.js';
 
 export interface DbReminder {
   id: number;

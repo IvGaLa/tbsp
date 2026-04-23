@@ -1,4 +1,4 @@
-import type { ConversationStates } from '../unions.types.js';
+import type { ConversationStates } from './unions.types.js';
 
 export interface DbConversationState {
   id: number;

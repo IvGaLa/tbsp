@@ -1,4 +1,4 @@
-import type { LogTypes } from '../unions.types.js';
+import type { LogTypes } from './unions.types.js';
 
 export interface DbLog {
   id: number;
