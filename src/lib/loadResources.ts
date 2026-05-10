@@ -1,12 +1,16 @@
 import fs from 'fs';
-import i18next from '../i18n/index.js';
 import path from 'path';
+
 import { fileURLToPath, pathToFileURL } from 'url';
+
+import i18next from '../i18n/index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export async function loadResources(dirName, fileName) {
+import type { Resource, Resources } from '../types/resources.types.js';
+
+export async function loadResources(dirName: string, fileName: string): Promise<Resources> {
   const resourceDir = path.join(__dirname, '..', dirName);
 
   // Sorting handlers files
@@ -15,30 +19,43 @@ export async function loadResources(dirName, fileName) {
     .filter((file) => file.endsWith(fileName))
     .sort();
 
-  const resources = {};
+  const resources: Resources = {};
 
   for (const file of files) {
     const filePath = path.join(resourceDir, file);
+
     const fileUrl = pathToFileURL(filePath).href;
 
-    const module = await import(fileUrl);
+    const module = (await import(fileUrl)) as {
+      default: unknown;
+    };
+
     const resource = module.default;
 
     if (!resource || typeof resource !== 'object') {
       // Resource is not an object
-      i18next.errorT('handlers.validations.resource', { handler_filename: fileUrl });
+      i18next.errorT('handlers.validations.resource', {
+        handler_filename: fileUrl,
+      });
+
       continue;
     }
 
-    if (!resource.name || typeof resource.name !== 'string') {
+    if (!('name' in resource) || typeof resource.name !== 'string') {
       // resource.name is not a string or not exists
-      i18next.errorT('handlers.validations.name', { fileUrl });
+      i18next.errorT('handlers.validations.name', {
+        fileUrl,
+      });
+
       continue;
     }
 
-    if (typeof resource.execute !== 'function') {
+    if (!('execute' in resource) || typeof resource.execute !== 'function') {
       // resource.execute is not a function
-      i18next.errorT('handlers.validations.execute', { fileUrl });
+      i18next.errorT('handlers.validations.execute', {
+        fileUrl,
+      });
+
       continue;
     }
 
@@ -51,12 +68,15 @@ export async function loadResources(dirName, fileName) {
         handler_filename: fileUrl,
         handler_filename_exists: resources[handlerName].__file,
       });
+
       continue;
     }
 
     resources[handlerName] = {
-      ...resource,
+      ...(resource as Resource),
+
       name: handlerName,
+
       __file: fileUrl,
     };
   }

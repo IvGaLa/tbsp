@@ -12,6 +12,7 @@ export const config = {
   cache,
   i18next: i18nextConf,
   ...env,
+  startWith: '/', // This is the start character for commands in Telegram
 };
 
 if (!config.BOT_TOKEN) {
