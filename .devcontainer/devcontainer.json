@@ -9,12 +9,12 @@
 
   "mounts": [
     "source=${localWorkspaceFolderBasename}-node_modules,target=/workspaces/${localWorkspaceFolderBasename}/node_modules,type=volume",
-    "source=pnpm-store,target=/pnpm,type=volume"
+    "source=pnpm-store,target=/pnpm/store,type=volume"
   ],
 
   "containerEnv": {
     "PNPM_HOME": "/pnpm",
-    "PNPM_STORE_DIR": "/pnpm/store"
+    "PNPM_STORE_PATH": "/pnpm/store"
   },
 
   "features": {
@@ -23,10 +23,9 @@
     }
   },
 
-  //  "onCreateCommand": "corepack enable && corepack prepare pnpm@latest --activate",
-  //  "postCreateCommand": "pnpm config set store-dir /pnpm/store && pnpm install",
-  "onCreateCommand": "sudo chown -R node:node /pnpm && sudo chown -R node:node /workspaces/${localWorkspaceFolderBasename}/node_modules",
-  "postCreateCommand": "corepack prepare pnpm@latest --activate && pnpm config set store-dir /pnpm/store && pnpm install",
+  "onCreateCommand": "sudo mkdir -p /pnpm/store && sudo chown -R node:node /pnpm && sudo chown -R node:node /workspaces",
+
+  "postCreateCommand": "corepack enable && corepack prepare pnpm@latest --activate && pnpm install",
 
   "customizations": {
     "vscode": {
